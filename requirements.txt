@@ -2,3 +2,5 @@ flask
 python-dotenv
 requests
 poetry
+pandas
+bios

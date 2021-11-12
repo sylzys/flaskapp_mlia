@@ -2,6 +2,27 @@ name: CI
 on: [push]
 
 jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [3.8]
+        poetry-version: [1.1.8]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run image
+        uses: abatilo/actions-poetry@v2.0.0
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install dependencies
+        run: poetry install
+      - name: Run tests
+        run: poetry run pytest
   code-quality:
     strategy:
       fail-fast: false
@@ -22,7 +43,7 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: Run isort
-        run: poetry run isort . --check-only --profile black
+        run: poetry run isort . --check-only
       - name: Run flake8
         run: poetry run flake8 . --ignore=E501,E722 --exclude .git,__pycache__,docs/source/conf.py,old,build,dist,tests,.venv,manifests
       - name: Run bandit
