@@ -1,0 +1,6 @@
+ALLOWED_EXTENSIONS: { "csv" }
+API_KEY: ""
+HEADERS: { "Content-Type": "application/json" }
+URL: "http://0f103a68-d9ae-4d8e-b4e2-10853ada1855.francecentral.azurecontainer.io/score"
+UPLOAD_FOLDER: "./tmp"
+SECRET_KEY: 'mysecretkey!'

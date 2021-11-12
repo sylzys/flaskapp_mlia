@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <!--From https://codepen.io/frytyler/pen/EGdtg-->
+  <head>
+    <meta charset="UTF-8" />
+    <title>Churn prediction</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Pacifico"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Arimo"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Hind:300"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+
+  </head>
+
+  <body class="text-center">
+    <div class="container">
+      <div class="row h-100">
+        <div class="col-sm-12 my-auto">
+          <div class="login">
+            <div class="logo">
+          </div>
+            <div class="brand"><img src="{{ url_for('static', filename='img/logo.png') }}" alt="Insurance logo" /></div>
+            <h1>Insurance charges Predictor</h1>
+
+            <form id="get_pred" action="{{ url_for('upload_file')}}" method="post" enctype=multipart/form-data>
+              <input type=file name=file>
+              <button
+                id="submit"
+                type="submit"
+                class="btn btn-primary btn-block btn-large"
+              >
+                Envoyer
+              </button>
+            </form>
+            </div>
+            <div id="warning">{{ warning }} </div>
+            <div id="prediction">
+              <table>
+                <tr>
+                    {% for col in column_names %}
+                    <th>{{col}}</th>
+                    {% endfor %}
+                </tr>
+                    {% for row in row_data %}
+                <tr>
+                  {% for col, row_ in zip(column_names, row) %}
+                  <td>{{row_}}</td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+            
+            </table>
+            </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+</html>
