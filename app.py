@@ -1,12 +1,16 @@
-import json, requests
+import json
 import os
+
 import bios
 import pandas as pd
 import requests
-from flask import Flask, flash, redirect, render_template, request, session, url_for
+from flask import (Flask, flash, redirect, render_template, request, session,
+                   url_for)
 from werkzeug.utils import secure_filename
 
 config = bios.read("config.yaml")
+
+
 def allowed_file(filename):
     """Checks if file extension is allowed to
 
@@ -19,11 +23,13 @@ def allowed_file(filename):
     extension = filename.rsplit(".", 1)[1].lower()
     return "." in filename and extension in config["ALLOWED_EXTENSIONS"]
 
-app = Flask(__name__)
-app.config["UPLOAD_FOLDER"]=config["UPLOAD_FOLDER"]
-app.config["SECRET_KEY"]=config["SECRET_KEY"]
-@app.route("/")
 
+app = Flask(__name__)
+app.config["UPLOAD_FOLDER"] = config["UPLOAD_FOLDER"]
+app.config["SECRET_KEY"] = config["SECRET_KEY"]
+
+
+@app.route("/")
 def home():
     return render_template("index.html")
 
@@ -84,6 +90,7 @@ def predict():
         )
     except:
         return "Error handling the file", 400
+
 
 if __name__ == "__main__":
     app.run()
